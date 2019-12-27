@@ -1,41 +1,53 @@
 'use strict'
 
-const apiKey = 'P8gRk7VBaTFtWMr6tY5Q30Q3faTvzL46rG8q7xR2IU9ScxkmRWD1pJbwbmSj'; 
-const searchURL = 'https://api.worldtradingdata.com/api/v1/history_multi_single_day';
+function formatURL(company, balance, initial, end) {
+    const apiKey = 'P8gRk7VBaTFtWMr6tY5Q30Q3faTvzL46rG8q7xR2IU9ScxkmRWD1pJbwbmSj'; 
+    const searchURL = 'https://api.worldtradingdata.com/api/v1/history_multi_single_day';
+    let firstDate = initial.replace(/-/g, '');
+    let secondDate = end.replace(/-/g, '');
+    const beginning = firstDate.slice(0,4) + '-' + firstDate.slice(4,6) + '-' + firstDate.slice(6,8);
+    const ending = secondDate.slice(0,4) + '-' + secondDate.slice(4,6) + '-' + secondDate.slice(6,8);
+    const firstURL = searchURL + '?symbol=' + company + '&date=' + beginning + '&' + 'api_token=' + apiKey;
+    const secondURL = searchURL + '?symbol=' + company + '&date=' + ending + '&' + 'api_token=' + apiKey;
+    fetchCall(firstURL, secondURL, company, balance);
+}
 
-// stock price of microsoft on 2017-january-11 
-const actualURL = 
-'https://api.worldtradingdata.com/api/v1/history_multi_single_day?symbol=msft&date=2017-01-11&api_token=P8gRk7VBaTFtWMr6tY5Q30Q3faTvzL46rG8q7xR2IU9ScxkmRWD1pJbwbmSj';
-
-function callThing(company, balance, initial, end) {
-    console.log(company);
-    let firstDate = initial.replace(/\//g, '');
-    let second = end.replace(/\//g, '');
-    const beginDate = firstDate.slice(0,4) + '-' + firstDate.slice(4,6) + '-' + firstDate.slice(6,8);
-    const url = searchURL + '?symbol=' + company + '&date=' + beginDate + '&' + 'api_token=' + apiKey;  
-    console.log(url);
-    fetch(url)
+function fetchCall(firstURL, secondURL, company, balance) {
+    fetch(firstURL)
     .then(response => {
       if (response.ok) {
         return response.json();
       }
       throw new Error(response.statusText);
     })
-    .then(responseJson => displayResults(responseJson, company))
-    .catch(err => {
-      $('#js-error-message').text(`Something went wrong: ${err.message}`);
-    });
+    .then(firstResponse => {
+      fetch(secondURL)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error(response.statusText);
+      })
+      .then(secondResponse => {
+        console.log(firstResponse, secondResponse);
+        displayResults(firstResponse, secondResponse, company, balance);
+      })
+    })
 }
 
-function displayResults(responseJson, company) {
-    console.log('fsdf');
-    console.log(responseJson);
-    console.log(typeof company);
-    let newCompany = company.toUpperCase();
-    console.log(company)
-    console.log(responseJson.data)
-    $('.answer').html(`<p>${responseJson.data[newCompany].close}</p>`);
-    console.log(responseJson.data.company.close)
+function displayResults(firstResponse, secondResponse, company, balance) {
+    console.log(firstResponse, secondResponse);
+    console.log(firstResponse.Message, secondResponse.Message);
+    if (firstResponse.Message || secondResponse.Message) {
+      alert('no data on that date');
+    } else {
+      let newCompany = company.toUpperCase();
+      let firstStock = parseFloat(firstResponse.data[newCompany].close);
+      let secondStock = parseFloat(secondResponse.data[newCompany].close);
+      let shares = balance / firstStock; 
+      let secondValue = (shares * secondStock).toFixed(2);
+      $('form').append(`<p>$${secondValue}</p>`);
+    }
 }
 
 function watchForm() {
@@ -45,9 +57,7 @@ function watchForm() {
         const balance = $('#initial-amount').val();
         const initial = $('#initial-date').val();
         const end = $('#end-date').val();
-        console.log(initial)
-        // console.log(initial)
-        callThing(company, balance, initial, end);
+        formatURL(company, balance, initial, end);
     })
 }
 
