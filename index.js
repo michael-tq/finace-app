@@ -46,7 +46,7 @@ function displayResults(firstResponse, secondResponse, company, balance) {
       let secondStock = parseFloat(secondResponse.data[newCompany].close);
       let shares = balance / firstStock; 
       let secondValue = (shares * secondStock).toFixed(2);
-      $('form').append(`<p>$${secondValue}</p>`);
+      $('.answer').html(`<p>By the time of withdrawal you will have $${secondValue}.</p>`);
     }
 }
 

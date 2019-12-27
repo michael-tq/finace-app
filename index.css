@@ -22,3 +22,7 @@ form {
 body {
     background-color: rgb(242, 209, 208)
 }
+
+.answer {
+    text-align: center;
+}
