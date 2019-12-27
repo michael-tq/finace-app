@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="index.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Gelasio&display=swap" rel="stylesheet">
+</head>
+<body>
+    <form>
+        <h1>Find out how much money you could have made!</h1>
+        <p>Enter a company ticker</p>
+        <input type="text" id="company-name">
+        <p>Enter a initial amount.</p>
+        <input type="text" id="initial-amount">
+        <p>Enter a initial date</p>
+        <input type="date" id="initial-date" value="yyyy/mm/dd">
+        <p>Enter a end date</p>
+        <input type="date" id="end-date" value="yyyy/mm/dd"><br>
+        <input type="submit">
+    </form>
+    <div class="answer"></div>
+    <div class="errors"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script src="nestedFetch.js"></script>
+</body>
+</html>
