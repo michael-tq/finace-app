@@ -17,6 +17,7 @@ form {
 
 #company-name, #initial-amount, #initial-date, #end-date  {
     border: solid rgb(50, 166, 86) 1px;
+    height: 1.5em;
 }
 
 body {
@@ -41,3 +42,10 @@ label {
     margin-left: auto;
     margin-right: auto;
 }
+
+@media screen and (min-width: 800px) {
+    #company-name, #initial-amount, #initial-month, #initial-year, #end-month, #end-year {
+        height: 1.0em;
+    }
+  }
+

@@ -1,6 +1,6 @@
 'use strict'
 
-function makeRequest(company, balance, initial, end) {
+function formatURL(company, balance, initialMonth, initialYear, endMonth, endYear) {
     const apiKey = 'P8gRk7VBaTFtWMr6tY5Q30Q3faTvzL46rG8q7xR2IU9ScxkmRWD1pJbwbmSj'; 
     const searchURL = 'https://api.worldtradingdata.com/api/v1/history_multi_single_day';
     let firstDate = initial.replace(/-/g, '');
@@ -29,14 +29,17 @@ function fetchCall(firstURL, secondURL, company, balance) {
         throw new Error(response.statusText);
       })
       .then(secondResponse => {
+        console.log(firstResponse, secondResponse);
         displayResults(firstResponse, secondResponse, company, balance);
       })
     })
-  }
+}
 
 function displayResults(firstResponse, secondResponse, company, balance) {
+    console.log(firstResponse, secondResponse);
+    console.log(firstResponse.Message, secondResponse.Message);
     if (firstResponse.Message || secondResponse.Message) {
-      alert('No data on that date or company ticker does not exist.');
+      alert('no data on that date');
     } else {
       let newCompany = company.toUpperCase();
       let firstStock = parseFloat(firstResponse.data[newCompany].close);
@@ -47,22 +50,9 @@ function displayResults(firstResponse, secondResponse, company, balance) {
     }
 }
 
-function checkData(company, balance, initial, end) {
-  if (company === '') {
-    return alert('Please enter a company ticker.');
-  } else if (balance === '') {
-    return alert('Please enter a balance.');
-  } else if (initial === '' || end === '') {
-    return alert('Please enter a date.');
-  }
-  let firstDate = new Date(initial).getUTCDay();
-  let secondDate = new Date(end).getUTCDay();
-  if (firstDate === 0 || firstDate === 6) {
-    return alert('Please do not select weekends or holidays.')
-  } else if (secondDate === 0 || secondDate === 6) {
-    return alert('Please do not select weekends or holidays.')
-  }
-  makeRequest(company, balance, initial, end);
+function checkInput(company, balance, initialMonth, initialYear, endMonth, endYear) {
+
+    formatURL(company, balance, initialMonth, initialYear, endMonth, endYear);
 }
 
 function watchForm() {
@@ -70,9 +60,12 @@ function watchForm() {
         event.preventDefault();
         const company = $('#company-name').val();
         const balance = $('#initial-amount').val();
-        const initial = $('#initial-date').val();
-        const end = $('#end-date').val();
-        checkData(company, balance, initial, end);
+        const initialMonth = $('#initial-month').val();
+        const initialYear = $('#initialYear').val();
+        const endMonth = $('#end-month').val();
+        const endYear = $('#end-year').val();        
+        checkInput(company, balance, initialMonth, initialYear, endMonth, endYear);
+        // formatURL(company, balance, initialMonth, initialYear, endMonth, endYear);
     })
 }
 
