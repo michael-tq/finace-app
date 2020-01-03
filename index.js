@@ -58,9 +58,9 @@ function checkData(company, balance, initial, end) {
   let firstDate = new Date(initial).getUTCDay();
   let secondDate = new Date(end).getUTCDay();
   if (firstDate === 0 || firstDate === 6) {
-    return alert('Please do not select weekends or holidays.')
+    return alert('Please do not select weekends or holidays. You can use the dropdown to help select a date.')
   } else if (secondDate === 0 || secondDate === 6) {
-    return alert('Please do not select weekends or holidays.')
+    return alert('Please do not select weekends or holidays. You can use the dropdown to help select a date.')
   }
   makeRequest(company, balance, initial, end);
 }
