@@ -16,12 +16,12 @@ form {
 }
 
 #company-name, #initial-amount, #initial-date, #end-date  {
-    border: solid rgb(50, 166, 86) 1px;
+    border: solid #FF8A8D 1px;
     height: 1.5em;
 }
 
 body {
-    background-color: rgb(242, 209, 208)
+    background-color: #A3FFBC;
 }
 
 .answer {
@@ -49,3 +49,16 @@ label {
     }
   }
 
+.errors {
+    text-align: center;
+    color: #CC471F;
+    font-size: 1.5em;
+    max-width: 100%;
+}
+
+.answer {
+    text-align: center;
+    font-size: 1.5em;
+    max-width: 100%;
+    color: #5979FF;
+}
