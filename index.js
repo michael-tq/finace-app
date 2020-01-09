@@ -36,7 +36,6 @@ function fetchCall(firstURL, secondURL, company, balance) {
 
 function displayResults(firstResponse, secondResponse, company, balance) {
     if (firstResponse.Message || secondResponse.Message) {
-      // alert('No data on that date or company ticker does not exist.');
       $('.answer').empty();
       $('.errors').html('No data on that date or company ticker does not exist.');
     } else {
@@ -52,27 +51,22 @@ function displayResults(firstResponse, secondResponse, company, balance) {
 
 function checkData(company, balance, initial, end) {
   if (company === '') {
-    // return alert('Please enter a company ticker.');
     $('.answer').empty();
     $('.errors').html('Please enter a company ticker.');
   } else if (balance === '') {
-    // return alert('Please enter a balance.');
     $('.answer').empty();
     $('.errors').html('Please enter a balance.');
   } else if (initial === '' || end === '') {
-    // return alert('Please enter a date.');
     $('.answer').empty();
     $('.errors').html('Please enter a date.');
   }
   let firstDate = new Date(initial).getUTCDay();
   let secondDate = new Date(end).getUTCDay();
   if (firstDate === 0 || firstDate === 6) {
-    // return alert('Please do not select weekends or holidays. You can use the dropdown to help select a date.')
     $('.answer').empty();
     $('.errors').html('Please do not select weekends or holidays. You can use the dropdown to help select a date.');
     return;
   } else if (secondDate === 0 || secondDate === 6) {
-    // return alert('Please do not select weekends or holidays. You can use the dropdown to help select a date.')
     $('.answer').empty();
     $('.errors').html('Please do not select weekends or holidays. You can use the dropdown to help select a date.');
     return;
